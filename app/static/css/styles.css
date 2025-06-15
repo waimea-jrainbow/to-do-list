@@ -33,3 +33,7 @@
 #messages .message.success { color: var(--pico-ins-color); }
 #messages .message.error   { color: var(--pico-del-color); }
 
+#tasks{
+    display: flex;
+    justify-content: space-around;
+}

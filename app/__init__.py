@@ -28,7 +28,7 @@ register_error_handlers(app)
 def show_all_things():
     with connect_db() as client:
         # Get all the things from the DB
-        sql = "SELECT id, name FROM `to-do-list` ORDER BY name ASC"
+        sql = "SELECT id, name, priority, status FROM `to-do-list` ORDER BY name ASC"
         result = client.execute(sql)
         tasks = result.rows
 
@@ -51,13 +51,13 @@ def add_a_task():
 
     with connect_db() as client:
         # Add the thing to the DB
-        sql = "INSERT INTO to-do-list (name, priority) VALUES (?, ?)"
+        sql = "INSERT INTO 'to-do-list' (name, priority) VALUES (?, ?)"
         values = [name, priority]
         client.execute(sql, values)
 
         # Go back to the home page
         flash(f"Task '{name}' added", "success")
-        return redirect("/home")
+        return redirect("/")
 
 
 #-----------------------------------------------------------

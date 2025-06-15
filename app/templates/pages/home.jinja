@@ -1,7 +1,7 @@
 {#=====================================================
-  Things list page
-  - List of things passed in as 'things' array
-  - Form for adding a new thing
+Things list page
+- List of things passed in as 'things' array
+- Form for adding a new thing
 =====================================================#}
 
 {% extends 'pages/base.jinja' %}
@@ -9,61 +9,58 @@
 
 {% block title %}
 
-    To do list
+To do list
 
 {% endblock %}
 
 
 {% block content %}
 
-    <h1>To do list...</h1>
+<h1>To do list...</h1>
 
 
-    <article>
+<article>
 
-        <ul>
-            {% for task in tasks %}
+    <table>
+        
+        <tr>
+            <td>Task</td>
+            <td>Priority</td>
+            <td>Status</td>
+        </tr>
+        {% for task in tasks %}
+        <tr>
+            
+            <td>{{task.name}}</td>
+            <td>{{task.priority}}</td>
+            <td>{{ if task.status = 1 "☑"}}
+                {{%else "☐"%}}</td>
+        </tr>
+        {% else %}
 
-                <li>
-                    {{ task.name }}
-                </li>
+        <p>None!</p>
 
-            {% else %}
+        {% endfor %}
+    </table>
 
-                <p>None!</p>
+</article>
 
-            {% endfor %}
-        </ul>
-
-    </article>
-
-
+<details name="Add items" closed>
+<summary role="button">Add items</summary>
     <article>
 
         <h3>Add a New Thing...</h3>
 
         <form action="/add" method="POST">
             <fieldset role="group">
-            <input
-                type="text"
-                name="name"
-                placeholder="Name of new thing"
-                required
-            >
+                <input type="text" name="name" placeholder="Name of new thing" required>
 
-            <input
-                type="number"
-                name="priority"
-                min="1"
-                placeholder="Priority (1-5)"
-                required
-            >
-            
-            <button>Submit</button>
+                <input type="number" name="priority" min="1" placeholder="Priority (1-5)" required>
+
+                <button>Submit</button>
             </fieldset>
         </form>
 
     </article>
-
+</details>
 {% endblock %}
-
