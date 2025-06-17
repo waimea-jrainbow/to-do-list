@@ -22,19 +22,22 @@ To do list
 <article>
 
     <table>
-        
+
         <tr>
-            <td>Task</td>
-            <td>Priority</td>
-            <td>Status</td>
+            <td class="table-title">Task</td>
+            <td class="table-title">Priority</td>
+            <td class="table-title">Status</td>
         </tr>
         {% for task in tasks %}
         <tr>
-            
-            <td>{{task.name}}</td>
             <td>{{task.priority}}</td>
-            <td>{{ if task.status = 1 "☑"}}
-                {{%else "☐"%}}</td>
+            <td>{{task.name}}</td>
+            <td>{% if task.status %}
+                <a id="complete" href="/incomplete/{{ task.id }}">☑</a>
+                {% else %}
+                <a id="incomplete" href="/complete/{{ task.id }}">☐</a>
+                {% endif %}
+            </td>
         </tr>
         {% else %}
 
@@ -46,7 +49,7 @@ To do list
 </article>
 
 <details name="Add items" closed>
-<summary role="button">Add items</summary>
+    <summary role="button">Add items</summary>
     <article>
 
         <h3>Add a New Thing...</h3>
@@ -54,9 +57,9 @@ To do list
         <form action="/add" method="POST">
             <fieldset role="group">
                 <input type="text" name="name" placeholder="Name of new thing" required>
-
-                <input type="number" name="priority" min="1" placeholder="Priority (1-5)" required>
-
+                <details class="dropdown">
+                    <input type="number" name="priority" min="1" placeholder="Priority (1-5)" required>
+                </details>
                 <button>Submit</button>
             </fieldset>
         </form>

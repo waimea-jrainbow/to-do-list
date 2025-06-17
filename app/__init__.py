@@ -28,7 +28,7 @@ register_error_handlers(app)
 def show_all_things():
     with connect_db() as client:
         # Get all the things from the DB
-        sql = "SELECT id, name, priority, status FROM `to-do-list` ORDER BY name ASC"
+        sql = "SELECT id, name, priority, status FROM `to-do-list` ORDER BY priority DESC"
         result = client.execute(sql)
         tasks = result.rows
 
@@ -61,18 +61,49 @@ def add_a_task():
 
 
 #-----------------------------------------------------------
+# Route for changing status to complete, Id given in the route
+#-----------------------------------------------------------
+@app.get("/complete/<int:id>")
+def complete_task(id):
+    with connect_db() as client:
+        # change status to complete
+        sql = "UPDATE 'to-do-list' SET status = 1 WHERE id=?"
+        values = [id]
+        client.execute(sql,values)
+
+        # Go back to the home page
+        flash("Tasks Completed")
+        return redirect("/")
+
+#-----------------------------------------------------------
+# Route for changing status to incomplete, Id given in the route
+#-----------------------------------------------------------
+@app.get("/incomplete/<int:id>")
+def incomplete_task(id):
+    with connect_db() as client:
+        # change status to complete
+        sql = "UPDATE 'to-do-list' SET status = 0 WHERE id=?"
+        values = [id]
+        client.execute(sql,values)
+
+        # Go back to the home page
+        flash("Tasks incompleted")
+        return redirect("/")
+    
+
+#-----------------------------------------------------------
 # Route for deleting a thing, Id given in the route
 #-----------------------------------------------------------
 @app.get("/delete/<int:id>")
-def delete_a_thing(id):
+def delete_a_task(id):
     with connect_db() as client:
         # Delete the thing from the DB
-        sql = "DELETE FROM things WHERE id=?"
+        sql = "DELETE FROM to-do-list WHERE id=?"
         values = [id]
         client.execute(sql, values)
 
         # Go back to the home page
-        flash("Thing deleted", "warning")
-        return redirect("/things")
+        flash("Task deleted", "warning")
+        return redirect("/")
 
 

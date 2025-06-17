@@ -37,3 +37,15 @@
     display: flex;
     justify-content: space-around;
 }
+
+.table-title{
+    text-decoration: underline;
+}
+
+/* #complete{
+    
+} */
+
+/* #incomplete{
+    opacity: 50%;
+} */
