@@ -94,11 +94,11 @@ def incomplete_task(id):
 #-----------------------------------------------------------
 # Route for deleting a thing, Id given in the route
 #-----------------------------------------------------------
-@app.get("/delete/<int:id>")
+@app.post("/delete/<int:id>")
 def delete_a_task(id):
     with connect_db() as client:
-        # Delete the thing from the DB
-        sql = "DELETE FROM to-do-list WHERE id=?"
+         # Delete the thing from the DB
+        sql = "DELETE FROM `to-do-list` WHERE id=?"
         values = [id]
         client.execute(sql, values)
 

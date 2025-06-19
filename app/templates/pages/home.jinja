@@ -24,8 +24,8 @@ To do list
     <table>
 
         <tr>
-            <td class="table-title">Task</td>
             <td class="table-title">Priority</td>
+            <td class="table-title">Task</td>
             <td class="table-title">Status</td>
         </tr>
         {% for task in tasks %}
@@ -37,6 +37,11 @@ To do list
                 {% else %}
                 <a id="incomplete" href="/complete/{{ task.id }}">☐</a>
                 {% endif %}
+            </td>
+            <td>
+                <form action="/delete/{{ task.id }}" method="post">
+                    <button>Delete</button>
+                </form>
             </td>
         </tr>
         {% else %}
@@ -52,18 +57,21 @@ To do list
     <summary role="button">Add items</summary>
     <article>
 
-        <h3>Add a New Thing...</h3>
+        <h3>Add a New task...</h3>
 
         <form action="/add" method="POST">
             <fieldset role="group">
-                <input type="text" name="name" placeholder="Name of new thing" required>
-                <details class="dropdown">
+                <input type="text" name="name" placeholder="Name" required>
                     <input type="number" name="priority" min="1" placeholder="Priority (1-5)" required>
-                </details>
                 <button>Submit</button>
             </fieldset>
         </form>
 
     </article>
 </details>
+
+
+
+
+
 {% endblock %}
